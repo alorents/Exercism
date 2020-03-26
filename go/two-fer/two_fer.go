@@ -5,7 +5,7 @@ package twofer
 // If blank will assume "you"
 // Assumes the sharer is included
 func ShareWith(name string) string {
-	if name == ""  {
+	if name == "" {
 		name = "you"
 	}
 	return "One for " + name + ", one for me."
