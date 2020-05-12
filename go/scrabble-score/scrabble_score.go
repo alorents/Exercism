@@ -1,11 +1,11 @@
 package scrabble
 
 import (
-	"strings"
+	"unicode"
 )
 
 var (
-	letterValues = map[rune]int {
+	letterValues = map[rune]int{
 		'A': 1,
 		'E': 1,
 		'I': 1,
@@ -43,10 +43,9 @@ var (
 
 // Score computes the scrabble score of a given word according to the values defined in letterValues
 func Score(input string) int {
-	input = strings.ToUpper(input)
 	totalScore := 0
 	for _, letter := range input {
-		letterValue := letterValues[letter]
+		letterValue := letterValues[unicode.ToUpper(letter)]
 		totalScore += letterValue
 	}
 	return totalScore
