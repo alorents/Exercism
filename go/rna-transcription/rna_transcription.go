@@ -1,23 +1,19 @@
 package strand
 
 import (
-	"unicode"
+	"strings"
+)
+
+var (
+	replacer = strings.NewReplacer(
+		"G", "C",
+		"C", "G",
+		"T", "A",
+		"A", "U",
+	)
 )
 
 // ToRNA provides the complimentary RNA strand for the given DNA strand
 func ToRNA(dna string) string {
-	rna := ""
-	for _, nucleotide := range dna {
-		switch unicode.ToUpper(nucleotide) {
-		case 'G':
-			rna += "C"
-		case 'C':
-			rna += "G"
-		case 'T':
-			rna += "A"
-		case 'A':
-			rna += "U"
-		}
-	}
-	return rna
+	return replacer.Replace(dna)
 }
