@@ -3,7 +3,6 @@ package dna
 import (
 	"errors"
 	"fmt"
-	"strings"
 )
 
 // Histogram is a mapping from nucleotide to its count in given DNA.
@@ -28,7 +27,7 @@ func (d DNA) Counts() (Histogram, error) {
 	}
 
 	for _, nucleotide := range d {
-		if strings.ContainsRune("ACGT", nucleotide) {
+		if _, ok := h[nucleotide]; ok {
 			h[nucleotide]++
 		} else {
 			return nil, errors.New(fmt.Sprintf("Invalid nucleotide: %q", nucleotide))
