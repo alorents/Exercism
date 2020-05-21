@@ -1,63 +1,47 @@
 package strain
 
+// Ints is an array of integers
 type Ints []int
+
+// Lists is an array of integer arrays
 type Lists [][]int
+
+// Strings is an array of strings
 type Strings []string
 
-func (ints Ints) Keep(keepfunc func(int) bool) Ints {
-	var result []int
+// Keep strains a collection of Ints to only include the members that match a given predicate function
+func (ints Ints) Keep(predicate func(int) bool) Ints {
+	var result Ints
 	for _, num := range ints {
-		if keepfunc(num) {
+		if predicate(num) {
 			result = append(result, num)
 		}
 	}
 	return result
 }
 
-func (ints Ints) Discard(discardfunc func(int) bool) Ints {
-	var result []int
-	for _, num := range ints {
-		if !discardfunc(num) {
-			result = append(result, num)
-		}
-	}
-	return result
+// Discard strains a collection of Ints to only include the members that don't match a given predicate function
+// This uses the Keep function to form a compliment set
+func (ints Ints) Discard(predicate func(int) bool) Ints {
+	return ints.Keep(func(n int) bool { return !predicate(n) })
 }
 
-func (strs Strings) Keep(keepfunc func(string) bool) Strings {
-	var result []string
+// Keep strains a collection of Strings to only include the members that match a given predicate function
+func (strs Strings) Keep(predicate func(string) bool) Strings {
+	var result Strings
 	for _, str := range strs {
-		if keepfunc(str) {
+		if predicate(str) {
 			result = append(result, str)
 		}
 	}
 	return result
 }
 
-func (strs Strings) Discard(discardfunc func(string) bool) Strings {
-	var result []string
-	for _, str := range strs {
-		if !discardfunc(str) {
-			result = append(result, str)
-		}
-	}
-	return result
-}
-
-func (lists Lists) Keep(keepfunc func([]int) bool) Lists {
-	var result [][]int
+// Keep strains a collection of Lists to only include the members that match a given predicate function
+func (lists Lists) Keep(predicate func([]int) bool) Lists {
+	var result Lists
 	for _, list := range lists {
-		if keepfunc(list) {
-			result = append(result, list)
-		}
-	}
-	return result
-}
-
-func (lists Lists) Discard(discardfunc func([]int) bool) Lists {
-	var result [][]int
-	for _, list := range lists {
-		if !discardfunc(list) {
+		if predicate(list) {
 			result = append(result, list)
 		}
 	}
