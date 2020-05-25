@@ -2,9 +2,13 @@ package protein
 
 import "errors"
 
+// ErrStop signals the end of a protein sequence
 var ErrStop = errors.New("stop codon encountered")
+
+// ErrInvalidBase indicates the encounters nucleotide sequence does not match any known codons
 var ErrInvalidBase = errors.New("invalid codon base")
 
+// FromRNA converts a nucleotide sequence to an array of its proteins
 func FromRNA(input string) ([]string, error) {
 	var output []string
 	for i := 0; i < len(input)/3; i++ {
@@ -22,6 +26,7 @@ func FromRNA(input string) ([]string, error) {
 	return output, nil
 }
 
+// FromCodon converts a codon string into its protein string
 func FromCodon(input string) (string, error) {
 	switch input {
 	case "AUG":
