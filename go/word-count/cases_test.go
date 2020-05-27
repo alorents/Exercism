@@ -9,31 +9,31 @@ var testCases = []struct {
 	input       string
 	output      Frequency
 }{
-	//{
-	//	"count one word",
-	//	"word",
-	//	Frequency{"word": 1},
-	//},
-	//{
-	//	"count one of each word",
-	//	"one of each",
-	//	Frequency{"each": 1, "of": 1, "one": 1},
-	//},
-	//{
-	//	"multiple occurrences of a word",
-	//	"one fish two fish red fish blue fish",
-	//	Frequency{"blue": 1, "fish": 4, "one": 1, "red": 1, "two": 1},
-	//},
-	//{
-	//	"handles cramped lists",
-	//	"one,two,three",
-	//	Frequency{"one": 1, "three": 1, "two": 1},
-	//},
-	//{
-	//	"handles expanded lists",
-	//	"one,\ntwo,\nthree",
-	//	Frequency{"one": 1, "three": 1, "two": 1},
-	//},
+	{
+		"count one word",
+		"word",
+		Frequency{"word": 1},
+	},
+	{
+		"count one of each word",
+		"one of each",
+		Frequency{"each": 1, "of": 1, "one": 1},
+	},
+	{
+		"multiple occurrences of a word",
+		"one fish two fish red fish blue fish",
+		Frequency{"blue": 1, "fish": 4, "one": 1, "red": 1, "two": 1},
+	},
+	{
+		"handles cramped lists",
+		"one,two,three",
+		Frequency{"one": 1, "three": 1, "two": 1},
+	},
+	{
+		"handles expanded lists",
+		"one,\ntwo,\nthree",
+		Frequency{"one": 1, "three": 1, "two": 1},
+	},
 	{
 		"ignore punctuation",
 		"car: carpet as java: javascript!!&@$%^&",
