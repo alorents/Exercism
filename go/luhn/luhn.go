@@ -7,7 +7,7 @@ import (
 
 // Valid determines if the given number is valid according to the Luhn Algorithm
 func Valid(input string) bool {
-	input = strings.Replace(input, " ", "", -1)
+	input = strings.ReplaceAll(input, " ", "")
 	if len(input) <= 1 {
 		return false
 	}
@@ -19,18 +19,13 @@ func Valid(input string) bool {
 			return false
 		}
 		value := int([]rune(input)[i] - '0')
-		if (len(input)-i)%2 == 1 {
-			sum += value
-		} else {
-			doubledValue := value * 2
-			if doubledValue > 9 {
-				doubledValue -= 9
+		if (len(input)-i)%2 != 1 {
+			value = value * 2
+			if value > 9 {
+				value -= 9
 			}
-			sum += doubledValue
 		}
+		sum += value
 	}
-	if sum%10 == 0 {
-		return true
-	}
-	return false
+	return sum%10 == 0
 }
