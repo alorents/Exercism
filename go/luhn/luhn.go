@@ -12,13 +12,13 @@ func Valid(input string) bool {
 		return false
 	}
 	// double every second digit from the right
-	doubleDigit := false
+	doubleDigit := len(input)%2 == 0
 	var sum int
-	for i := len(input) - 1; i >= 0; i-- {
-		if !unicode.IsDigit([]rune(input)[i]) {
+	for _, r := range input {
+		if !unicode.IsDigit(r) {
 			return false
 		}
-		value := int([]rune(input)[i] - '0')
+		value := int(r - '0')
 		if doubleDigit {
 			value *= 2
 			if value > 9 {
