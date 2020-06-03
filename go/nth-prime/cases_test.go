@@ -35,6 +35,12 @@ var tests = []struct {
 		true,
 	},
 	{
+		"bigger prime",
+		100001,
+		1299721,
+		true,
+	},
+	{
 		"there is no zeroth prime",
 		0,
 		0,
