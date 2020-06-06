@@ -25,35 +25,30 @@ func Encode(plaintext string) string {
 		",", "",
 		".", "",
 	)
-	encodedText := replacer.Replace(plaintext)
-	rows := int(math.Sqrt(float64(len(encodedText))))
+	text := replacer.Replace(plaintext)
+	rows := int(math.Sqrt(float64(len(text))))
 	columns := rows
-	if rows*columns < len(encodedText) {
+	if rows*columns < len(text) {
 		columns++
-		if rows*columns < len(encodedText) {
+		if rows*columns < len(text) {
 			rows++
 		}
 	}
-	paddingSize := rows*columns - len(encodedText)
-	encodedText += strings.Repeat(" ", paddingSize)
-	squareText := make([]string, rows)
-	for i := 0; i < rows-1; i++ {
-		squareText[i] = encodedText[i*columns : (i+1)*columns]
-	}
-	// handle final row which may be shorter than the others
-	squareText[rows-1] = encodedText[(rows-1)*columns:]
-
+	paddingSize := rows*columns - len(text)
+	text += strings.Repeat(" ", paddingSize)
 	var builder strings.Builder
-	for i := 0; i < columns; i++ {
-		for j := 0; j < rows; j++ {
-			if j < rows {
-				builder.WriteRune(unicode.ToLower(rune(squareText[j][i])))
+	rowIndex, columnIndex := 0, 0
+	for i := 0; i < len(text); i++ {
+		index := rowIndex*columns + columnIndex
+		builder.WriteRune(unicode.ToLower(rune(text[index])))
+		rowIndex++
+		if rowIndex == rows {
+			rowIndex = 0
+			columnIndex++
+			if columnIndex < columns {
+				builder.WriteRune(' ')
 			}
 		}
-		if i < columns-1 {
-			builder.WriteRune(' ')
-		}
 	}
-	encodedText = builder.String()
-	return encodedText
+	return builder.String()
 }
