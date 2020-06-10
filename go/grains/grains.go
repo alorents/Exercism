@@ -2,7 +2,6 @@ package grains
 
 import (
 	"errors"
-	"math"
 )
 
 const (
@@ -17,7 +16,7 @@ func Square(square int) (uint64, error) {
 	if square < minSquare || square > maxSquare {
 		return 0, errors.New("input must match a square on a chessboard")
 	}
-	return uint64(math.Pow(2, float64(square)-1)), nil
+	return uint64(1 << (square-1)), nil
 }
 
 // Total calculates the total number of grains on the board following the premise described in the square function
