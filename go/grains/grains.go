@@ -21,10 +21,7 @@ func Square(square int) (uint64, error) {
 
 // Total calculates the total number of grains on the board following the premise described in the square function
 // the sum of 2^0 + 2^1 + 2^2... + 2^n can be expressed as: x = 2^(n+1)-1
+// For a chess board this is 2^64 - 1
 func Total() uint64 {
-	total, err := Square(maxSquare)
-	if err != nil {
-		return 0
-	}
-	return total*2 - 1
+	return 1<<64 - 1
 }
