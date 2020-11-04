@@ -7,17 +7,13 @@ import (
 
 // PrivateKey generates a random key with value greater than 1 and less than p
 func PrivateKey(p *big.Int) *big.Int {
-	_one := big.NewInt(1)
-	privateKey := _one
-	for privateKey.Cmp(_one) <= 0 {
-		var err error
-		privateKey, err = rand.Int(rand.Reader, p)
-		if err != nil {
-			return big.NewInt(0)
-		}
+	two := big.NewInt(2)
+	max := new(big.Int).Sub(p, two)
+	privateKey, err := rand.Int(rand.Reader, max)
+	if err != nil {
+		return nil
 	}
-
-	return privateKey
+	return privateKey.Add(privateKey, two)
 }
 
 // PublicKey calulates a public key = g**a mod p
