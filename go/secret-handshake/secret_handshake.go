@@ -17,9 +17,7 @@ func Handshake(code uint) []string {
 	if code&0b10000 == 0b10000 {
 		for i := 0; i < len(handshake)/2; i++ {
 			j := len(handshake) - i - 1
-			temp := handshake[i]
-			handshake[i] = handshake[j]
-			handshake[j] = temp
+			handshake[i], handshake[j] = handshake[j], handshake[i]
 		}
 	}
 
