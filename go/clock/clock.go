@@ -1,6 +1,8 @@
 package clock
 
-import "strconv"
+import (
+	"fmt"
+)
 
 // Clock defines a time using hours and minutes using 24-hour time without dates
 type Clock struct {
@@ -32,31 +34,15 @@ func New(hour, min int) Clock {
 }
 
 func (clock Clock) String() string {
-	hourString := strconv.Itoa(clock.hour)
-	if clock.hour < 10 {
-		hourString = "0" + hourString
-	}
-	minString := strconv.Itoa(clock.minute)
-	if clock.minute < 10 {
-		minString = "0" + minString
-	}
-	return hourString + ":" + minString
+	return fmt.Sprintf("%02d:%02d", clock.hour, clock.minute)
 }
 
 // Add minutes to a Clock type
 func (clock Clock) Add(min int) Clock {
-	if min == 0 {
-		return clock
-	}
-
 	return New(clock.hour, clock.minute+min)
 }
 
 // Subtract minutes from a Clock type
 func (clock Clock) Subtract(min int) Clock {
-	if min == 0 {
-		return clock
-	}
-
 	return clock.Add(-min)
 }
