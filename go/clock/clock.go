@@ -12,25 +12,13 @@ type Clock struct {
 
 // New is the clock constructor
 func New(hour, min int) Clock {
-	clock := Clock{hour: 0, minute: 0}
-
-	// Adjust for over/underflow minutes
-	hour += min / 60
-	min = min % 60
-	if min < 0 {
-		min += 60
-		hour--
+	// normalize time in minutes
+	minutes := min + hour*60
+	minutes %= 24 * 60
+	if minutes < 0 {
+		minutes += 24 * 60
 	}
-
-	// Adjust for over/underflow hours
-	hour = hour % 24
-	if hour < 0 {
-		hour += 24
-	}
-	clock.hour = hour
-	clock.minute = min
-
-	return clock
+	return Clock{minutes / 60, minutes % 60}
 }
 
 func (clock Clock) String() string {
@@ -44,5 +32,5 @@ func (clock Clock) Add(min int) Clock {
 
 // Subtract minutes from a Clock type
 func (clock Clock) Subtract(min int) Clock {
-	return clock.Add(-min)
+	return New(clock.hour, clock.minute-min)
 }
