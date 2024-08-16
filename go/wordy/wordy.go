@@ -8,7 +8,7 @@ import (
 func Answer(question string) (int, bool) {
 	var val1 int
 	var op string
-	question = strings.TrimLeft(question, "What is ")
+	question = strings.TrimLeft(question, "What is")
 	question = strings.TrimRight(question, "?")
 	question = strings.ReplaceAll(question, "multiplied by", "multipliedby")
 	question = strings.ReplaceAll(question, "divided by", "dividedby")
