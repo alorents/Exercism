@@ -12,14 +12,10 @@ import (
 // Format the empty set as {}.
 
 // Define the Set type here.
-type Set struct {
-	elements map[string]string
-}
+type Set map[string]string
 
 func New() Set {
-	return Set{
-		elements: make(map[string]string),
-	}
+	return make(map[string]string)
 }
 
 func NewFromSlice(l []string) Set {
@@ -32,8 +28,8 @@ func NewFromSlice(l []string) Set {
 
 func (s Set) String() string {
 	elementString := ""
-	keys := make([]string, 0, len(s.elements))
-	for k := range s.elements {
+	keys := make([]string, 0, len(s))
+	for k := range s {
 		keys = append(keys, k)
 	}
 	if len(keys) == 1 {
@@ -51,23 +47,23 @@ func (s Set) String() string {
 }
 
 func (s Set) IsEmpty() bool {
-	return len(s.elements) == 0
+	return len(s) == 0
 }
 
 func (s Set) Has(elem string) bool {
-	_, ok := s.elements[elem]
+	_, ok := s[elem]
 	return ok
 }
 
 func (s Set) Add(elem string) {
-	s.elements[elem] = elem
+	s[elem] = elem
 }
 
 func Subset(s1, s2 Set) bool {
-	if len(s1.elements) > len(s2.elements) {
+	if len(s1) > len(s2) {
 		return false
 	}
-	for elem := range s1.elements {
+	for elem := range s1 {
 		if !s2.Has(elem) {
 			return false
 		}
@@ -77,31 +73,25 @@ func Subset(s1, s2 Set) bool {
 }
 
 func Disjoint(s1, s2 Set) bool {
-	return len(Intersection(s1, s2).elements) == 0
-}
-
-func Equal(s1, s2 Set) bool {
-	if len(s1.elements) != len(s2.elements) {
-		return false
-	}
-	for elem := range s1.elements {
-		if !s2.Has(elem) {
+	for elem := range s1 {
+		if _, ok := s2[elem]; ok {
 			return false
 		}
 	}
 	return true
 }
 
+func Equal(s1, s2 Set) bool {
+	if len(s1) != len(s2) {
+		return false
+	}
+	return Subset(s1, s2)
+}
+
 func Intersection(s1, s2 Set) Set {
 	s3 := New()
-
-	for elem := range s1.elements {
+	for elem := range s1 {
 		if s2.Has(elem) {
-			s3.Add(elem)
-		}
-	}
-	for elem := range s2.elements {
-		if s1.Has(elem) {
 			s3.Add(elem)
 		}
 	}
@@ -114,7 +104,7 @@ func Difference(s1, s2 Set) Set {
 		return s1
 	}
 	s3 := New()
-	for elem := range s1.elements {
+	for elem := range s1 {
 		if !s2.Has(elem) {
 			s3.Add(elem)
 		}
@@ -124,10 +114,10 @@ func Difference(s1, s2 Set) Set {
 
 func Union(s1, s2 Set) Set {
 	s3 := New()
-	for elem := range s1.elements {
+	for elem := range s1 {
 		s3.Add(elem)
 	}
-	for elem := range s2.elements {
+	for elem := range s2 {
 		s3.Add(elem)
 	}
 	return s3
