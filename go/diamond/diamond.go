@@ -1,6 +1,7 @@
 package diamond
 
 import (
+	"bytes"
 	"fmt"
 	"strings"
 )
@@ -13,42 +14,14 @@ func Gen(char byte) (string, error) {
 		return "A", nil
 	}
 
-	var top string
-	var bottom string
-	outerSpaces := int(char - 'A')
-	innerSpaces := 0
+	length := int(char-'A')*2 + 1
+	rows := make([]string, length)
 
-	for c := 'A'; c <= rune(char); c++ {
-		line := ""
-		for i := 0; i < outerSpaces; i++ {
-			line += " "
-		}
-		line += string(c)
-		if innerSpaces > 0 {
-			for i := 0; i < innerSpaces; i++ {
-				line += " "
-			}
-			line += string(c)
-		}
-		for i := 0; i < outerSpaces; i++ {
-			line += " "
-		}
-
-		outerSpaces--
-		if innerSpaces == 0 {
-			innerSpaces++
-		} else {
-			innerSpaces += 2
-		}
-		if c == rune(char) {
-			top += line + "\n"
-		} else {
-			top += line + "\n"
-			bottom = line + "\n" + bottom
-		}
+	for c := byte('A'); c <= char; c++ {
+		row := bytes.Repeat([]byte{' '}, length)
+		row[char-c], row[length-1-int(char-c)] = c, c
+		rows[c-'A'], rows[length-1-int(c-'A')] = string(row), string(row)
 	}
 
-	s := top + bottom
-	s, _ = strings.CutSuffix(s, "\n")
-	return s, nil
+	return strings.Join(rows, "\n"), nil
 }
